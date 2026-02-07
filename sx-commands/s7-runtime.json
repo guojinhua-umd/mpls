@@ -1,0 +1,87 @@
+{
+  "target": "bmv2",
+  "p4info": "build/mpls.p4.p4info.txtpb",
+  "bmv2_json": "build/mpls.json",
+  "table_entries": [
+    {
+      "table": "MyIngress.mpls_tbl",
+      "default_action": true,
+      "action_name": "MyIngress.drop",
+      "action_params": { }
+    },    
+    {
+      "table": "MyIngress.mpls_tbl",
+      "match": {
+        "hdr.mpls.label": [
+          2
+        ]
+      },
+      "action_name": "MyIngress.mpls_forward",
+      "action_params": {
+        "dstAddr": "00:00:0a:07:02:02",
+        "port": 3
+      }
+    },
+    {
+      "table": "MyIngress.mpls_tbl",
+      "match": {
+        "hdr.mpls.label": [
+          3
+        ]
+      },
+      "action_name": "MyIngress.mpls_forward",
+      "action_params": {
+        "dstAddr": "00:00:0a:07:03:02",
+        "port": 4
+      }
+    },
+    {
+      "table": "MyEgress.check_is_egress_border",
+      "match": {
+        "standard_metadata.egress_port": [
+          3
+        ]
+      },
+      "action_name": "MyEgress.is_egress_border",
+      "action_params": {}
+    },
+    {
+      "table": "MyEgress.check_is_egress_border",
+      "match": {
+        "standard_metadata.egress_port": [
+          4
+        ]
+      },
+      "action_name": "MyEgress.is_egress_border",
+      "action_params": {}
+    },
+    {
+      "table": "MyIngress.ipv4_lpm",
+      "match": {
+        "hdr.ipv4.dstAddr": [
+          "10.7.2.2",
+          32
+        ]
+      },
+      "action_name": "MyIngress.ipv4_forward",
+      "action_params": {
+        "dstAddr": "00:00:0a:07:02:02",
+        "port": 3
+      }
+    },
+    {
+      "table": "MyIngress.ipv4_lpm",
+      "match": {
+        "hdr.ipv4.dstAddr": [
+          "10.7.3.2",
+          32
+        ]
+      },
+      "action_name": "MyIngress.ipv4_forward",
+      "action_params": {
+        "dstAddr": "00:00:0a:07:03:02",
+        "port": 4
+      }
+    }
+  ]
+}

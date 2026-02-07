@@ -1,0 +1,64 @@
+{
+    "hosts": {
+        "h1": {
+            "ip": "10.1.1.2/24",
+            "mac": "00:00:0a:01:01:02",
+            "commands": [
+                "route add default gw 10.1.1.0 dev eth0",
+                "arp -i eth0 -s 10.1.1.0 00:00:0a:01:01:00"
+            ]
+        },
+        "h2": {
+            "ip": "10.7.2.2/24",
+            "mac": "00:00:0a:07:02:02",
+            "commands": [
+                "route add default gw 10.7.2.0 dev eth0",
+                "arp -i eth0 -s 10.7.2.0 00:00:0a:07:02:00"
+            ]
+        },
+        "h3": {
+            "ip": "10.7.3.2/24",
+            "mac": "00:00:0a:07:03:02",
+            "commands": [
+                "route add default gw 10.7.3.0 dev eth0",
+                "arp -i eth0 -s 10.7.3.0 00:00:0a:07:03:00"
+            ]
+        }
+    },
+    "switches": {
+        "s1": {
+            "runtime_json": "sx-commands/s1-runtime.json"
+        },
+        "s2": {
+            "runtime_json": "sx-commands/s2-runtime.json"
+        },
+        "s3": {
+            "runtime_json": "sx-commands/s3-runtime.json"
+        },
+        "s4": {
+            "runtime_json": "sx-commands/s4-runtime.json"
+        },
+        "s5": {
+            "runtime_json": "sx-commands/s5-runtime.json"
+        },
+        "s6": {
+            "runtime_json": "sx-commands/s6-runtime.json"
+        },
+        "s7": {
+            "runtime_json": "sx-commands/s7-runtime.json"
+        }
+    },
+
+    "links": [["h1", "s1-p1"],
+              ["s1-p2", "s2-p1"],
+              ["s1-p3", "s3-p1"],
+              ["s2-p2", "s4-p1"],
+              ["s3-p2", "s4-p2"],
+              ["s4-p3", "s5-p1"],
+              ["s4-p4", "s6-p1"],
+              ["s5-p2", "s7-p1"],
+              ["s6-p2", "s7-p2"],
+              ["s7-p3", "h2"],
+              ["s7-p4", "h3"]]
+}
+

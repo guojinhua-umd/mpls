@@ -1,0 +1,39 @@
+{
+  "target": "bmv2",
+  "p4info": "build/mpls.p4.p4info.txtpb",
+  "bmv2_json": "build/mpls.json",
+  "table_entries": [
+    {
+      "table": "MyIngress.mpls_tbl",
+      "default_action": true,
+      "action_name": "MyIngress.drop",
+      "action_params": { }
+    },    
+    {
+      "table": "MyIngress.mpls_tbl",
+      "match": {
+        "hdr.mpls.label": [
+          2
+        ]
+      },
+      "action_name": "MyIngress.mpls_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:06:04:00",
+        "port": 4
+      }
+    },
+    {
+      "table": "MyIngress.mpls_tbl",
+      "match": {
+        "hdr.mpls.label": [
+          3
+        ]
+      },
+      "action_name": "MyIngress.mpls_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:05:04:00",
+        "port": 3
+      }
+    }
+  ]
+}
